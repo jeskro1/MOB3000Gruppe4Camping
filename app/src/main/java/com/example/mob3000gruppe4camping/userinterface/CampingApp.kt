@@ -15,9 +15,13 @@ fun CampingApp() {
     val items = listOf(Screen.Home, Screen.Map, Screen.Profile)
 
     Scaffold(
+        topBar = {
+            TopNavigationBar(navController = navController, items = items)
+        },
         bottomBar = {
             BottomNavigationBar(navController = navController, items = items)
         }
+
     ) { innerPadding ->
         NavHost(
             navController = navController,

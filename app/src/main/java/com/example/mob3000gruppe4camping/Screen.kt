@@ -13,3 +13,4 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object Profile : Screen("profile", "Profile", Icons.Default.Person)
 
 }
+
