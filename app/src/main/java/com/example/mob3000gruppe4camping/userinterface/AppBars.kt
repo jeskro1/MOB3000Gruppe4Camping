@@ -27,9 +27,6 @@ fun CampingTopAppBar() {
             IconButton(onClick = { /* burgerMenu() */ }) {
                 Icon(Icons.Default.Menu, contentDescription = "Menu Icon")
             }
-            IconButton(onClick = { /* profilePage() */ }) {
-                Icon(Icons.Default.AccountCircle, contentDescription = "Profile Icon")
-            }
         }
     )
 }
