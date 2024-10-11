@@ -51,16 +51,32 @@ fun ProfilesScreen() {
         Text(
             text = "jonas.deig@example.com",
             style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray
+            color = Color.Gray,
+            fontSize = 20.sp,
+        )
+        Text(
+            text = "123456789",
+            style = MaterialTheme.typography.bodyMedium,
+            fontSize = 20.sp,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {  },
-            shape = RoundedCornerShape(16.dp)
+            modifier = Modifier.size(200.dp, 60.dp)
         ) {
-            Text(text = "Log Out")
+            Text(text = "Mine bookinger")
         }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {  },
+            modifier = Modifier
+                .size(200.dp, 60.dp)
+        ) {
+            Text("Logg ut")
+        }
+
     }
 }

@@ -16,8 +16,13 @@ fun CampingApp() {
 
     Scaffold(
         topBar = {
-            TopNavigationBar(navController = navController, items = items)
+            TopNavigationBar(
+                navController = navController,
+                homeScreenRoute = Screen.Home.route,
+                onBack = { navController.popBackStack() }
+            )
         },
+
         bottomBar = {
             BottomNavigationBar(navController = navController, items = items)
         }
