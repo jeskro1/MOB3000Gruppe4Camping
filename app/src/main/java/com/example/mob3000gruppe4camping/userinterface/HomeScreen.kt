@@ -8,10 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.R
+import com.example.mob3000gruppe4camping.Screen
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
@@ -26,7 +28,7 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(32.dp))
             TitleText()
             Spacer(modifier = Modifier.height(32.dp))
-            CenteredButton()
+            CenteredButton(navController)
         }
     }
 }
@@ -49,12 +51,13 @@ fun TitleText() {
 }
 
 @Composable
-fun CenteredButton(modifier: Modifier = Modifier) {
+fun CenteredButton(navController: NavHostController) {
     Button(
-        onClick = {  },
-        modifier = Modifier
-            .size(200.dp, 60.dp)
+        onClick = {
+            navController.navigate(Screen.Booking.route) // Navigate to BookingScreen
+        },
+        modifier = Modifier.size(200.dp, 60.dp)
     ) {
-        Text("Bestill plass nå!")
+        Text("Bestill plass nå!") // Your button text
     }
 }

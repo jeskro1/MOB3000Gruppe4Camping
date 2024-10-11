@@ -1,5 +1,5 @@
 package com.example.mob3000gruppe4camping.userinterface
-
+/*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
@@ -18,7 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mob3000gruppe4camping.Screen
-
+*/
 /*@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CampingTopAppBar() {

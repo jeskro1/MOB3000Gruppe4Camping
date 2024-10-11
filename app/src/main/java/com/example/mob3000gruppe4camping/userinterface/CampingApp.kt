@@ -22,7 +22,6 @@ fun CampingApp() {
                 onBack = { navController.popBackStack() }
             )
         },
-
         bottomBar = {
             BottomNavigationBar(navController = navController, items = items)
         }
@@ -33,9 +32,10 @@ fun CampingApp() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) { HomeScreen() }
+            composable(Screen.Home.route) { HomeScreen(navController) }
             composable(Screen.Map.route) {MapScreen()}
             composable(Screen.Profile.route) { ProfilesScreen() }
+            composable(Screen.Booking.route) { BookingScreen() }
         }
     }
 }
