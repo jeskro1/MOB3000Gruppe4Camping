@@ -14,12 +14,8 @@ import com.example.mob3000gruppe4camping.R
 fun HomeScreen() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            CampingTopAppBar()
-        },
-        bottomBar = {
-            CampingBottomAppBar()
-        }
+
+
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -49,15 +45,15 @@ fun CampingImage() {
 @Composable
 fun TitleText() {
     Text(
-        text = "Camping", // Your title text here
-        style = MaterialTheme.typography.headlineLarge // Style for the title
+        text = "Camping",
+        style = MaterialTheme.typography.headlineLarge
     )
 }
 
 @Composable
 fun CenteredButton(modifier: Modifier = Modifier) {
     Button(
-        onClick = { /* Perform action */ },
+        onClick = {  },
         modifier = Modifier
             .size(200.dp, 60.dp)
     ) {
