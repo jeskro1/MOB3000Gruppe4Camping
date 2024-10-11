@@ -14,8 +14,6 @@ import com.example.mob3000gruppe4camping.R
 fun HomeScreen() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-
-
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -36,7 +34,7 @@ fun HomeScreen() {
 @Composable
 fun CampingImage() {
     Image(
-        painter = painterResource(id = R.drawable.camping_logo), // Replace with your image resource
+        painter = painterResource(id = R.drawable.camping_zone_1), // Replace with your image resource
         contentDescription = "Camping Logo",
         modifier = Modifier.size(200.dp) // Adjust size if necessary
     )
