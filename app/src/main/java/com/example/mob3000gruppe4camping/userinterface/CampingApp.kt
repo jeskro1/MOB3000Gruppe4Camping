@@ -35,7 +35,8 @@ fun CampingApp() {
             composable(Screen.Home.route) { HomeScreen(navController) }
             composable(Screen.Map.route) {MapScreen()}
             composable(Screen.Profile.route) { ProfilesScreen() }
-            composable(Screen.Booking.route) { BookingScreen() }
+            composable(Screen.Booking.route) { BookingScreen(navController) }
+            composable(Screen.Receipt.route) { ReceiptScreen() }
         }
     }
 }

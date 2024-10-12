@@ -15,6 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mob3000gruppe4camping.Screen
 import com.example.mob3000gruppe4camping.R // Import your logo and icons here
 
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopNavigationBar(navController: NavHostController, homeScreenRoute: String, onBack: () -> Unit) {
@@ -25,18 +26,16 @@ fun TopNavigationBar(navController: NavHostController, homeScreenRoute: String, 
         title = {},
         navigationIcon = {
             if (currentRoute == homeScreenRoute) {
-                // Show the logo when on the home screen
                 Box(
                     modifier = Modifier
-                        .size(175.dp) // Set the size of the Box
+                        .size(175.dp)
                         .clickable(onClick = {
-                            // Handle image click action here
                         })
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.camping1),
                         contentDescription = "Logo",
-                        modifier = Modifier.fillMaxSize() // Make the image fill the Box
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             } else {
@@ -50,7 +49,6 @@ fun TopNavigationBar(navController: NavHostController, homeScreenRoute: String, 
             }
         },
         actions = {
-            // Dropdown menu on the right side
             var expanded by remember { mutableStateOf(false) }
             IconButton(onClick = { expanded = true }) {
                 Icon(
@@ -65,13 +63,14 @@ fun TopNavigationBar(navController: NavHostController, homeScreenRoute: String, 
             ) {
                 DropdownMenuItem(
                     text = { Text("Option 1") },
-                    onClick = { /* Handle Option 1 */ }
+                    onClick = { /* Option 1 */ }
                 )
                 DropdownMenuItem(
                     text = { Text("Option 2") },
-                    onClick = { /* Handle Option 2 */ }
+                    onClick = { /* Option 2 */ }
                 )
             }
         }
     )
 }
+*/

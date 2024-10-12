@@ -36,9 +36,9 @@ fun HomeScreen(navController: NavHostController) {
 @Composable
 fun CampingImage() {
     Image(
-        painter = painterResource(id = R.drawable.camping_zone_1), // Replace with your image resource
+        painter = painterResource(id = R.drawable.camping_zone_1),
         contentDescription = "Camping Logo",
-        modifier = Modifier.size(200.dp) // Adjust size if necessary
+        modifier = Modifier.size(200.dp)
     )
 }
 
@@ -54,10 +54,10 @@ fun TitleText() {
 fun CenteredButton(navController: NavHostController) {
     Button(
         onClick = {
-            navController.navigate(Screen.Booking.route) // Navigate to BookingScreen
+            navController.navigate(Screen.Booking.route)
         },
         modifier = Modifier.size(200.dp, 60.dp)
     ) {
-        Text("Bestill plass nå!") // Your button text
+        Text("Bestill plass nå!")
     }
 }

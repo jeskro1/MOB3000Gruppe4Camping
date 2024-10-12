@@ -11,10 +11,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.R
+import com.example.mob3000gruppe4camping.Screen
 
 @Composable
-fun BookingScreen() {
+fun BookingScreen(navController: NavHostController) {
 
     var selectedCampingSpot by remember { mutableStateOf("Velg camping plass") }
     var selectedCampingType by remember { mutableStateOf("Velg camping type") }
@@ -80,23 +82,30 @@ fun BookingScreen() {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Button(
-            onClick = { /* Booking recepit side */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(text = "Bekreft")
-        }
+        ConfirmButton(navController)
+    }
+}
+
+@Composable
+fun ConfirmButton(navController: NavHostController) {
+    Button(
+        onClick = {
+            navController.navigate(Screen.Booking.route)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text("Bekreft")
     }
 }
 
 @Composable
 fun CampingPlassImage() {
     Image(
-        painter = painterResource(id = R.drawable.campingoversikt3), // Replace with your image resource
+        painter = painterResource(id = R.drawable.campingoversikt3),
         contentDescription = "Camping Logo",
-        modifier = Modifier.size(200.dp) // Adjust size if necessary
+        modifier = Modifier.size(200.dp)
     )
 }
 
