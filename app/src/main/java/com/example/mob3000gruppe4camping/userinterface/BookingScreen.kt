@@ -90,7 +90,7 @@ fun BookingScreen(navController: NavHostController) {
 fun ConfirmButton(navController: NavHostController) {
     Button(
         onClick = {
-            navController.navigate(Screen.Booking.route)
+            navController.navigate(Screen.Receipt.route)
         },
         modifier = Modifier
             .fillMaxWidth()
