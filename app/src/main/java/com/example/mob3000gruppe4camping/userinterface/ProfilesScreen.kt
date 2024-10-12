@@ -14,12 +14,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mob3000gruppe4camping.R
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.navigation.NavHostController
+import com.example.mob3000gruppe4camping.Screen
 
 
 @Composable
-fun ProfilesScreen() {
+fun ProfilesScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,19 +55,16 @@ fun ProfilesScreen() {
             fontSize = 20.sp,
         )
         Text(
-            text = "123456789",
+            text = "576984370",
             style = MaterialTheme.typography.bodyMedium,
             fontSize = 20.sp,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = {  },
-            modifier = Modifier.size(200.dp, 60.dp)
-        ) {
-            Text(text = "Mine bookinger")
-        }
+        MineBookingerButton(navController)
+
+
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
@@ -78,5 +75,18 @@ fun ProfilesScreen() {
             Text("Logg ut")
         }
 
+    }
+}
+
+@Composable
+fun MineBookingerButton(navController: NavHostController) {
+    Button(
+        onClick = {
+            navController.navigate(Screen.MineBookinger.route)
+        },
+        modifier = Modifier
+            .size(200.dp, 60.dp)
+    ) {
+        Text("Mine bookinger")
     }
 }

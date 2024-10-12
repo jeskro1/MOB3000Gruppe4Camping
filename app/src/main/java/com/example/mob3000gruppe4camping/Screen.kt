@@ -15,4 +15,5 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object Profile : Screen("profile", "Profile", Icons.Default.Person)
     object Booking : Screen("booking", "Booking", Icons.Default.Book)
     object Receipt : Screen("receipt", "Receipt", Icons.Default.Receipt)
+    object MineBookinger : Screen("minebookinger", "Mine Bookinger", Icons.Default.Receipt)
 }
