@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "156816174195",
+    "project_id": "gruppe4camping",
+    "storage_bucket": "gruppe4camping.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156816174195:android:af2288ee8f812c13f74e06",
+        "android_client_info": {
+          "package_name": "com.example.mob3000gruppe4camping"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmnNv65Q14m5HioxpWw5Gn0qNqU9W4BoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

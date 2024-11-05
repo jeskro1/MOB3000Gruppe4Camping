@@ -14,6 +14,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.R
 import com.example.mob3000gruppe4camping.Screen
+import com.google.firebase.firestore.FirebaseFirestore
+
+
+data class Booking(
+    val campingSpot: String,
+    val campingType: String,
+    val campingDuration: String
+)
 
 @Composable
 fun BookingScreen(navController: NavHostController) {
@@ -82,15 +90,42 @@ fun BookingScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        ConfirmButton(navController)
+        ConfirmButton(
+            navController = navController,
+            campingSpot = selectedCampingSpot,
+            campingType = selectedCampingType,
+            campingDuration = selectedCampingDuration
+        )
     }
 }
 
 @Composable
-fun ConfirmButton(navController: NavHostController) {
+fun ConfirmButton(
+    navController: NavHostController,
+    campingSpot: String,
+    campingType: String,
+    campingDuration: String
+) {
+    val db = FirebaseFirestore.getInstance()
     Button(
         onClick = {
-            navController.navigate(Screen.Receipt.route)
+            // Create a Booking object
+            val booking = Booking(
+                campingSpot = campingSpot,
+                campingType = campingType,
+                campingDuration = campingDuration
+            )
+
+            // Add the booking to Firestore
+            db.collection("bookings")
+                .add(booking)
+                .addOnSuccessListener {
+                    navController.navigate(Screen.Receipt.route) // Navigate on success
+                }
+                .addOnFailureListener { e ->
+                    // Handle failure (e.g., show a toast message)
+                    println("Error adding document: $e")
+                }
         },
         modifier = Modifier
             .fillMaxWidth()
@@ -99,6 +134,7 @@ fun ConfirmButton(navController: NavHostController) {
         Text("Bekreft")
     }
 }
+
 
 @Composable
 fun CampingPlassImage() {
