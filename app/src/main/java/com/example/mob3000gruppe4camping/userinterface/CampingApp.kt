@@ -11,11 +11,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000gruppe4camping.Screen
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun CampingApp() {
     val navController = rememberNavController()
     val items = listOf(Screen.Home, Screen.Map, Screen.Profile)
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -25,8 +27,27 @@ fun CampingApp() {
                 onBack = { navController.popBackStack() }
             )
         },
+        // CampingApp.kt
         bottomBar = {
-            BottomNavigationBar(navController = navController, items = items)
+            BottomNavigationBar(
+                navController = navController,
+                items = items,
+                onMapSelected = {
+                    val latitude = 48.8584
+                    val longitude = 2.2945
+                    val uri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Eiffel Tower)")
+                    val intent = Intent(Intent.ACTION_VIEW, uri).apply {
+                        setPackage("com.google.android.apps.maps")  // Prefer Google Maps if available
+                    }
+
+                    // Check if Google Maps is available, or fall back to any available maps app
+                    if (intent.resolveActivity(context.packageManager) != null) {
+                        context.startActivity(intent)
+                    } else {
+                        println("Google Maps app is not available.")
+                    }
+                }
+            )
         }
 
     ) { innerPadding ->
@@ -36,7 +57,6 @@ fun CampingApp() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) { HomeScreen(navController) }
-            composable(Screen.Map.route) {OpenGoogleMapsLocation()}
             composable(Screen.Profile.route) { ProfilesScreen(navController) }
             composable(Screen.Booking.route) { BookingScreen(navController) }
             composable(Screen.Receipt.route) { ReceiptScreen() }
@@ -45,19 +65,4 @@ fun CampingApp() {
     }
 }
 
-@Composable
-fun OpenGoogleMapsLocation() {
-    val context = LocalContext.current
-    val latitude = 48.8584
-    val longitude = 2.2945
-
-    val uri = Uri.parse("geo:$latitude,$longitude")
-    val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-        setPackage("com.google.android.apps.maps")
-    }
-
-    if (intent.resolveActivity(context.packageManager) != null) {
-        context.startActivity(intent)
-    }
-}
 

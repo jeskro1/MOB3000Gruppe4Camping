@@ -21,7 +21,11 @@ import com.example.mob3000gruppe4camping.R
 import com.example.mob3000gruppe4camping.Screen
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController, items: List<Screen>) {
+fun BottomNavigationBar(
+    navController: NavHostController,
+    items: List<Screen>,
+    onMapSelected: () -> Unit
+) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
@@ -32,7 +36,10 @@ fun BottomNavigationBar(navController: NavHostController, items: List<Screen>) {
                 label = { Text(screen.title) },
                 selected = currentRoute == screen.route,
                 onClick = {
-                    if (currentRoute != screen.route) {
+                    if (screen == Screen.Map) {
+                        // Trigger the Google Maps intent instead of navigating
+                        onMapSelected()
+                    } else if (currentRoute != screen.route) {
                         navController.navigate(screen.route) {
                             launchSingleTop = true
                             restoreState = true
@@ -43,6 +50,7 @@ fun BottomNavigationBar(navController: NavHostController, items: List<Screen>) {
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
