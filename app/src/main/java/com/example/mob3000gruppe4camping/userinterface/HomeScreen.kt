@@ -1,5 +1,6 @@
 package com.example.mob3000gruppe4camping.userinterface
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -54,6 +55,7 @@ fun TitleText() {
 fun CenteredButton(navController: NavHostController) {
     Button(
         onClick = {
+            Log.d("Navigation", "Navigating to route: ${Screen.Booking.route}")
             navController.navigate(Screen.Booking.route)
         },
         modifier = Modifier.size(200.dp, 60.dp)

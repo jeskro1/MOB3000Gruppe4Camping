@@ -21,17 +21,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : ComponentActivity() {
 
-    // Firestore instance
+
     private lateinit var db: FirebaseFirestore
     private val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "sampleUserId"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize Firestore
+
         db = FirebaseFirestore.getInstance()
 
-        // Example calls to CRUD functions
+
         createUserProfile()
         readUserProfile()
         updateUserProfile()
@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // Function to open Google Maps at the camping location
+
     private fun openGoogleMaps() {
         val latitude = 59.5641
         val longitude = 9.6015
@@ -115,9 +115,10 @@ fun CampingApp(navController: NavHostController, onMapSelected: () -> Unit) {
         ) {
             composable(Screen.Home.route) { HomeScreen(navController) }
             composable(Screen.Profile.route) { ProfilesScreen(navController) }
-            composable(Screen.MineBookinger.route) { ReceiptScreen() } // Accessed from ProfilesScreen
+            composable(Screen.Booking.route) { BookingScreen(navController) }
+            composable(Screen.MineBookinger.route) { ReceiptScreen() }
             composable(Screen.Map.route) {
-                // Trigger Google Maps intent when Map is selected
+
                 onMapSelected()
             }
         }

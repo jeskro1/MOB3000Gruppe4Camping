@@ -13,10 +13,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
 fun MapScreen() {
-    // Access the context to launch the intent
+
     val context = LocalContext.current
 
-    // Coordinates for the camping location
     val latitude = 59.5641
     val longitude = 9.6015
 
@@ -50,7 +49,7 @@ fun MapScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(onClick = {
-                    // Create an intent to open Google Maps at the specified coordinates
+
                     val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Campingplass)")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")

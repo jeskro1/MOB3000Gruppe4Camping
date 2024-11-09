@@ -37,7 +37,7 @@ fun BottomNavigationBar(
                 selected = currentRoute == screen.route,
                 onClick = {
                     if (screen == Screen.Map) {
-                        onMapSelected() // Trigger Google Maps intent
+                        onMapSelected()
                     } else if (currentRoute != screen.route) {
                         navController.navigate(screen.route) {
                             launchSingleTop = true
@@ -98,11 +98,11 @@ fun TopNavigationBar(navController: NavHostController, homeScreenRoute: String, 
             ) {
                 DropdownMenuItem(
                     text = { Text("Option 1") },
-                    onClick = { /* Option 1 */ }
+                    onClick = {  }
                 )
                 DropdownMenuItem(
                     text = { Text("Option 2") },
-                    onClick = { /* Option 2 */ }
+                    onClick = {  }
                 )
             }
         }

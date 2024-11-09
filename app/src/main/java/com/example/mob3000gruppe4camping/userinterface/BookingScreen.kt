@@ -120,10 +120,10 @@ fun ConfirmButton(
             db.collection("bookings")
                 .add(booking)
                 .addOnSuccessListener {
-                    navController.navigate(Screen.Receipt.route) // Navigate on success
+                    navController.navigate(Screen.Receipt.route)
                 }
                 .addOnFailureListener { e ->
-                    // Handle failure (e.g., show a toast message)
+
                     println("Error adding document: $e")
                 }
         },

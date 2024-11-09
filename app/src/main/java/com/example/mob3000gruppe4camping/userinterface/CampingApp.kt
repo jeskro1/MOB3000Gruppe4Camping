@@ -32,15 +32,15 @@ fun CampingApp() {
                 navController = navController,
                 items = items,
                 onMapSelected = {
-                    // Update the coordinates to your camping location
+
                     val latitude = 59.5641
                     val longitude = 9.6015
                     val uri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Campingplass)")
                     val intent = Intent(Intent.ACTION_VIEW, uri).apply {
-                        setPackage("com.google.android.apps.maps")  // Prefer Google Maps if available
+                        setPackage("com.google.android.apps.maps")
                     }
 
-                    // Check if Google Maps is available, or fall back to any available maps app
+
                     if (intent.resolveActivity(context.packageManager) != null) {
                         context.startActivity(intent)
                     } else {
