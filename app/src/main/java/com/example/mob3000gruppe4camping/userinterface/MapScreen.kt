@@ -1,15 +1,25 @@
 package com.example.mob3000gruppe4camping.userinterface
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
 fun MapScreen() {
+    // Access the context to launch the intent
+    val context = LocalContext.current
+
+    // Coordinates for the camping location
+    val latitude = 59.5641
+    val longitude = 9.6015
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,6 +46,18 @@ fun MapScreen() {
                     text = "plassering på kartet",
                     style = MaterialTheme.typography.bodyLarge
                 )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(onClick = {
+                    // Create an intent to open Google Maps at the specified coordinates
+                    val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Campingplass)")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    context.startActivity(mapIntent)
+                }) {
+                    Text("Åpne i Google Maps")
+                }
             }
         }
     }

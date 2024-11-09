@@ -5,13 +5,13 @@ import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000gruppe4camping.Screen
-import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun CampingApp() {
@@ -27,15 +27,15 @@ fun CampingApp() {
                 onBack = { navController.popBackStack() }
             )
         },
-        // CampingApp.kt
         bottomBar = {
             BottomNavigationBar(
                 navController = navController,
                 items = items,
                 onMapSelected = {
-                    val latitude = 48.8584
-                    val longitude = 2.2945
-                    val uri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Eiffel Tower)")
+                    // Update the coordinates to your camping location
+                    val latitude = 59.5641
+                    val longitude = 9.6015
+                    val uri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Campingplass)")
                     val intent = Intent(Intent.ACTION_VIEW, uri).apply {
                         setPackage("com.google.android.apps.maps")  // Prefer Google Maps if available
                     }
@@ -49,7 +49,6 @@ fun CampingApp() {
                 }
             )
         }
-
     ) { innerPadding ->
         NavHost(
             navController = navController,
@@ -64,5 +63,3 @@ fun CampingApp() {
         }
     }
 }
-
-

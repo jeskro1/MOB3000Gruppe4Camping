@@ -37,8 +37,7 @@ fun BottomNavigationBar(
                 selected = currentRoute == screen.route,
                 onClick = {
                     if (screen == Screen.Map) {
-                        // Trigger the Google Maps intent instead of navigating
-                        onMapSelected()
+                        onMapSelected() // Trigger Google Maps intent
                     } else if (currentRoute != screen.route) {
                         navController.navigate(screen.route) {
                             launchSingleTop = true
