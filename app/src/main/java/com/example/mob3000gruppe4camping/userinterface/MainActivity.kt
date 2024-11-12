@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
@@ -22,17 +21,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : ComponentActivity() {
 
-
-
     private lateinit var db: FirebaseFirestore
     private val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "sampleUserId"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         db = FirebaseFirestore.getInstance()
-
 
         createUserProfile()
         readUserProfile()
@@ -49,7 +44,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
     private fun openGoogleMaps() {
         val latitude = 59.5641
         val longitude = 9.6015
@@ -59,7 +53,6 @@ class MainActivity : ComponentActivity() {
         startActivity(mapIntent)
     }
 
-    // CRUD functions
     private fun createUserProfile() {
         val userData = hashMapOf("name" to "John Doe", "email" to "johndoe@example.com")
 
@@ -107,6 +100,9 @@ fun CampingApp(navController: NavHostController, onMapSelected: () -> Unit) {
         Screen.LoginSignup.route
     }
     Scaffold(
+        topBar = {
+            TopNavigationBar(navController, startDestination)
+        },
         bottomBar = {
             BottomNavigationBar(
                 navController = navController,
@@ -127,7 +123,6 @@ fun CampingApp(navController: NavHostController, onMapSelected: () -> Unit) {
             composable(Screen.Booking.route) { BookingScreen(navController) }
             composable(Screen.MineBookinger.route) { MineBookingerScreen(navController) }
             composable(Screen.Map.route) {
-
                 onMapSelected()
             }
         }
