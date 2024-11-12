@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ProfilesScreen(navController: NavHostController) {
+    val firebaseUser = FirebaseAuth.getInstance().currentUser
+    val userEmail = firebaseUser?.email ?: ""
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,20 +30,6 @@ fun ProfilesScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
-        val profileImage: Painter = painterResource(id = android.R.drawable.ic_menu_camera)
-
-
-        Image(
-            painter = profileImage,
-            contentDescription = "Profil bilde",
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
         Text(
             text = "Jonas Deig",
             style = MaterialTheme.typography.titleLarge,
@@ -50,14 +38,9 @@ fun ProfilesScreen(navController: NavHostController) {
         )
 
         Text(
-            text = "jonas.deig@example.com",
+            text = "Email: $userEmail",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray,
-            fontSize = 20.sp,
-        )
-        Text(
-            text = "576984370",
-            style = MaterialTheme.typography.bodyMedium,
             fontSize = 20.sp,
         )
 
