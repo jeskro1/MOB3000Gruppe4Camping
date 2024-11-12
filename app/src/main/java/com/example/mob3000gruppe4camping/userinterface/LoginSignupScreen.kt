@@ -26,6 +26,12 @@ fun LoginSignupScreen(navController: NavHostController) {
 
     var errorMessage by remember { mutableStateOf("") }
 
+    LaunchedEffect(errorMessage) { // Trigger recomposition when errorMessage changes
+        if (errorMessage.isNotEmpty()) {
+            errorMessage = ""
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -64,7 +70,6 @@ fun LoginSignupScreen(navController: NavHostController) {
                             }
                         }
                 } else {
-
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
@@ -79,11 +84,15 @@ fun LoginSignupScreen(navController: NavHostController) {
         ) {
             Text(if (isLogin) "Login" else "Signup")
         }
+
         Spacer(modifier = Modifier.height(16.dp))
+
         TextButton(onClick = { isLogin = !isLogin }) {
             Text(if (isLogin) "Don't have an account? Signup" else "Already have an account? Login")
         }
+
         Spacer(modifier = Modifier.height(8.dp))
+
         if (errorMessage.isNotEmpty()) {
             Text(
                 text = errorMessage,
