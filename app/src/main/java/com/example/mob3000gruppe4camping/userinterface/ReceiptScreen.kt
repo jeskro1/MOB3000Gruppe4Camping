@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.Firebase
@@ -67,15 +68,25 @@ fun ReceiptScreen(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
             elevation = CardDefaults.cardElevation(8.dp)
+
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+
             ) {
+                Text(
+                    text = "BookingId: ${bookingData?.bookingID ?: ""}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
 
                 Text(
                     text = "Plass: ${bookingData?.campingSpot ?: ""}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+
+
                 )
                 Text(
                     text = "Type: ${bookingData?.campingType ?: ""}",
@@ -86,7 +97,11 @@ fun ReceiptScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    text = "Dato: 09-10-2024",
+                    text = "Startdato: ${bookingData?.startDate ?: ""}",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "Sluttdato: ${bookingData?.endDate ?: ""}",
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(

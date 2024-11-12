@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MOB3000Gruppe4Camping" parent="android:Theme.Material.Light.NoActionBar" />
-</resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <item name="materialCalendarTheme">@style/CalendarTheme</item>
+
+    </style>
+    <style name="CalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+    </style>
+
+    </resources>

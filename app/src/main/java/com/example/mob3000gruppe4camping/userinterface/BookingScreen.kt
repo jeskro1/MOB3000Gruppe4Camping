@@ -18,14 +18,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.ui.text.intl.Locale
-import kotlin.text.format
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 
 data class Booking(
+    val bookingID: String? = null,
     val campingSpot: String? = null,
     val campingType: String? = null,
     val userId: String? = null,
@@ -54,9 +53,10 @@ fun BookingScreen(navController: NavHostController) {
     var showStartDatePicker by remember { mutableStateOf(false) }
     var showEndDatePicker by remember { mutableStateOf(false) }
 
+    val bookingID = UUID.randomUUID().toString()
     val campingSpots = listOf("A1", "A2", "A3", "B1")
     val campingTypes = listOf("Telt", "Camping-Vogn", "Camping-Buss")
-    val antPersoner = listOf("1 Person", "2 Personer", "3 Personer", "4 Personer")
+    val antPersoner = listOf("1", "2", "3", "4")
     val datePickerStateStart = rememberDatePickerState()
     val datePickerStateEnd = rememberDatePickerState()
 
@@ -204,18 +204,19 @@ fun ConfirmButton(
         onClick = {
             val timestamplong: Long = System.currentTimeMillis()/1000
             val timestamp = timestamplong.toString()
+            val bookingID = UUID.randomUUID().toString()
 
             val dateFormat = SimpleDateFormat("dd-MM-yyyy")
             val startDateString = startDate?.let { dateFormat.format(Date(it)) }
             val endDateString = endDate?.let { dateFormat.format(Date(it)) }
 
             val booking = Booking(
+                bookingID = bookingID,
                 campingSpot = campingSpot,
                 campingType = campingType,
                 userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
                 timestamp = timestamp,
                 antPersoner = antPersoner,
-                // Pass formatted date strings
                 startDate = startDateString,
                 endDate = endDateString
             )

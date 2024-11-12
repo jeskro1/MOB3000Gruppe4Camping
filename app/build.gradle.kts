@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation (libs.firebase.ui.auth)
+    implementation(libs.material)
 
     // Firebase BOM for version management
     implementation(platform(libs.firebase.bom))

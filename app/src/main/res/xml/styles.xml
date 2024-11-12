@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="CustomCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorOnSurface">@colors/black</item>
+        <item name="colorPrimary">@colors/white</item>
+    </style>
+</PreferenceScreen>

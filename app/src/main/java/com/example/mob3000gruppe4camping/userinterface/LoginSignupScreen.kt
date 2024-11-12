@@ -87,7 +87,7 @@ fun LoginSignupScreen(navController: NavHostController) {
         if (errorMessage.isNotEmpty()) {
             Text(
                 text = errorMessage,
-                color = Color.Red, // Or any desired error color
+                color = Color.Red,
                 modifier = Modifier.padding(top = 8.dp)
             )
         }

@@ -28,7 +28,7 @@ fun MineBookingerScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Kvittering",
+            text = "Alle kvitteringer",
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 16.dp)
         )
