@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -26,8 +27,9 @@ fun LoginSignupScreen(navController: NavHostController) {
 
     var errorMessage by remember { mutableStateOf("") }
 
-    LaunchedEffect(errorMessage) { // Trigger recomposition when errorMessage changes
+    LaunchedEffect(errorMessage) {
         if (errorMessage.isNotEmpty()) {
+            delay(20000)
             errorMessage = ""
         }
     }
@@ -75,7 +77,7 @@ fun LoginSignupScreen(navController: NavHostController) {
                             if (task.isSuccessful) {
                                 navController.navigate(Screen.Home.route)
                             } else {
-                                errorMessage = "Signup failed. Please check your credentials."
+                                errorMessage = "Signup failed. Password needs numerics and letters."
                             }
                         }
                 }
