@@ -64,7 +64,6 @@ fun MineBookingerScreen(navController: NavHostController) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-
         if (isLoading) {
             CircularProgressIndicator()
         }
@@ -99,7 +98,7 @@ fun MineBookingerScreen(navController: NavHostController) {
                                 textAlign = TextAlign.Center
                             )
                             Text(
-                                text = "Sted: ${booking.campingSpot ?: "N/A"}",
+                                text = "Plass: ${booking.campingSpot ?: "N/A"}",
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
@@ -107,26 +106,31 @@ fun MineBookingerScreen(navController: NavHostController) {
                             Text(
                                 text = "Type: ${booking.campingType ?: "N/A"}",
                                 style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
                             )
                             Text(
                                 text = "Personer: ${booking.antPersoner ?: "N/A"}",
                                 style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
                             )
                             Text(
-                                text = "Start Dato: ${booking.startDate ?: "N/A"}",
+                                text = "Start dato: ${booking.startDate ?: "N/A"}",
                                 style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
                             )
                             Text(
-                                text = "Slutt Dato: ${booking.endDate ?: "N/A"}",
+                                text = "Slutt dato: ${booking.endDate ?: "N/A"}",
                                 style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
                             )
                             Text(
                                 text = "Pris: 299,99kr",
                                 style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
                             )
                         }

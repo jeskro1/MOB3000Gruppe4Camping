@@ -63,7 +63,6 @@ fun ReceiptScreen(navController: NavHostController) {
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
@@ -84,26 +83,38 @@ fun ReceiptScreen(navController: NavHostController) {
                 Text(
                     text = "Plass: ${bookingData?.campingSpot ?: ""}",
                     style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
                 Text(
                     text = "Type: ${bookingData?.campingType ?: ""}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
                 Text(
                     text = "Personer: ${bookingData?.antPersoner ?: ""}",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "Startdato: ${bookingData?.startDate ?: ""}",
-                    style = MaterialTheme.typography.bodyLarge
+                    text = "Start dato: ${bookingData?.startDate ?: ""}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "Sluttdato: ${bookingData?.endDate ?: ""}",
-                    style = MaterialTheme.typography.bodyLarge
+                    text = "Slutt dato: ${bookingData?.endDate ?: ""}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
                 Text(
                     text = "Pris: 299,99kr",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
             }
         }
