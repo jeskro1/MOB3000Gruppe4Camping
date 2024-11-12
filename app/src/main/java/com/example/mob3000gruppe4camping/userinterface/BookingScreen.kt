@@ -28,8 +28,9 @@ data class Booking(
     val campingDuration: String? = null,
     val userId: String? = null,
     val timestamp: String? = null,
+    val antPersoner: String? = null
 ) {
-    constructor() : this(null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null)
 }
 
 @Composable
@@ -44,10 +45,12 @@ fun BookingScreen(navController: NavHostController) {
     var selectedCampingSpot by remember { mutableStateOf("Velg camping plass") }
     var selectedCampingType by remember { mutableStateOf("Velg camping type") }
     var selectedCampingDuration by remember { mutableStateOf("Velg hvor lenge") }
+    var selectedAntPersoner by remember { mutableStateOf("Velg antall personer") }
 
     val campingSpots = listOf("A1", "A2", "A3", "B1")
     val campingTypes = listOf("Telt", "Camping-Vogn", "Camping-Buss")
     val campingDurations = listOf("1 Natt", "2 Netter", "3 Netter", "1 Uke")
+    val antPersoner = listOf("1 Person", "2 Personer", "3 Personer", "4 Personer")
 
     Column(
         modifier = Modifier
@@ -56,7 +59,6 @@ fun BookingScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CampingPlassImage()
         Spacer(modifier = Modifier.height(32.dp))
         Text(
             text = "Booking",
@@ -100,6 +102,14 @@ fun BookingScreen(navController: NavHostController) {
                     onValueChange = { selectedCampingDuration = it },
                     items = campingDurations,
                 )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                DropdownItem(
+                    selectedValue = selectedAntPersoner,
+                    onValueChange = { selectedAntPersoner = it },
+                    items = antPersoner,
+                )
             }
         }
 
@@ -109,7 +119,8 @@ fun BookingScreen(navController: NavHostController) {
             navController = navController,
             campingSpot = selectedCampingSpot,
             campingType = selectedCampingType,
-            campingDuration = selectedCampingDuration
+            campingDuration = selectedCampingDuration,
+            antPersoner = selectedAntPersoner
         )
     }
 }
@@ -119,7 +130,8 @@ fun ConfirmButton(
     navController: NavHostController,
     campingSpot: String,
     campingType: String,
-    campingDuration: String
+    campingDuration: String,
+    antPersoner: String
 ) {
     val db = FirebaseFirestore.getInstance()
     Button(
@@ -132,7 +144,8 @@ fun ConfirmButton(
                 campingType = campingType,
                 campingDuration = campingDuration,
                 userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
-                timestamp = timestamp
+                timestamp = timestamp,
+                antPersoner = antPersoner
             )
 
             db.collection("bookings")
@@ -151,16 +164,6 @@ fun ConfirmButton(
     ) {
         Text("Bekreft")
     }
-}
-
-
-@Composable
-fun CampingPlassImage() {
-    Image(
-        painter = painterResource(id = R.drawable.campingoversikt3),
-        contentDescription = "Camping Logo",
-        modifier = Modifier.size(200.dp)
-    )
 }
 
 @Composable

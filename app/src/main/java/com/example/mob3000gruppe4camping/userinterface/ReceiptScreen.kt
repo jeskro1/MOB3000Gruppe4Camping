@@ -88,6 +88,10 @@ fun ReceiptScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
+                    text = "Personer: ${bookingData?.antPersoner ?: ""}",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
                     text = "Dato: 09-10-2024",
                     style = MaterialTheme.typography.bodyLarge
                 )
