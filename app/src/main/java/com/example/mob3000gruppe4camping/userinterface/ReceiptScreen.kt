@@ -12,8 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.geometry.isEmpty
-import androidx.lifecycle.get
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.Firebase

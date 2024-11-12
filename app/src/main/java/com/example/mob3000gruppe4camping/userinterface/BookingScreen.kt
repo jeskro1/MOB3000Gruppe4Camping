@@ -1,5 +1,6 @@
 package com.example.mob3000gruppe4camping.userinterface
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -17,6 +18,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.ui.text.intl.Locale
+import kotlin.text.format
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 
 data class Booking(
@@ -25,8 +31,8 @@ data class Booking(
     val userId: String? = null,
     val timestamp: String? = null,
     val antPersoner: String? = null,
-    val startDate: Long? = null,
-    val endDate: Long? = null,
+    val startDate: String? = null,
+    val endDate: String? = null,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +44,9 @@ fun BookingScreen(navController: NavHostController) {
                 navController.navigate(Screen.LoginSignup.route)
             }
         }
+
+    var startDateButtonText by remember { mutableStateOf("Select Start Date") }
+    var endDateButtonText by remember { mutableStateOf("Select End Date") }
 
     var selectedCampingSpot by remember { mutableStateOf("Velg camping plass") }
     var selectedCampingType by remember { mutableStateOf("Velg camping type") }
@@ -64,6 +73,8 @@ fun BookingScreen(navController: NavHostController) {
                 confirmButton = {
                     TextButton(onClick = {
                         showStartDatePicker = false
+                        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                        startDateButtonText = dateFormat.format(datePickerStateStart.selectedDateMillis)
                     }) {
                         Text("OK")
                     }
@@ -84,6 +95,8 @@ fun BookingScreen(navController: NavHostController) {
                 confirmButton = {
                     TextButton(onClick = {
                         showEndDatePicker = false
+                        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                        endDateButtonText = dateFormat.format(datePickerStateEnd.selectedDateMillis)
                     }) {
                         Text("OK")
                     }
@@ -149,7 +162,7 @@ fun BookingScreen(navController: NavHostController) {
                     onClick = { showStartDatePicker = true },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Select Start Date")
+                    Text(startDateButtonText)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -158,7 +171,7 @@ fun BookingScreen(navController: NavHostController) {
                     onClick = { showEndDatePicker = true },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Select End Date")
+                    Text(endDateButtonText)
                 }
             }
         }
@@ -176,6 +189,7 @@ fun BookingScreen(navController: NavHostController) {
     }
 }
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 fun ConfirmButton(
     navController: NavHostController,
@@ -191,14 +205,19 @@ fun ConfirmButton(
             val timestamplong: Long = System.currentTimeMillis()/1000
             val timestamp = timestamplong.toString()
 
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val startDateString = startDate?.let { dateFormat.format(Date(it)) }
+            val endDateString = endDate?.let { dateFormat.format(Date(it)) }
+
             val booking = Booking(
                 campingSpot = campingSpot,
                 campingType = campingType,
                 userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
                 timestamp = timestamp,
                 antPersoner = antPersoner,
-                startDate = startDate,
-                endDate = endDate
+                // Pass formatted date strings
+                startDate = startDateString,
+                endDate = endDateString
             )
 
             db.collection("bookings")
