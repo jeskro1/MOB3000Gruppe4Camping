@@ -81,12 +81,9 @@ fun ReceiptScreen(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
-
                 Text(
                     text = "Plass: ${bookingData?.campingSpot ?: ""}",
                     style = MaterialTheme.typography.bodyLarge,
-
-
                 )
                 Text(
                     text = "Type: ${bookingData?.campingType ?: ""}",
