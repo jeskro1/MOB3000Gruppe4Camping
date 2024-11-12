@@ -7,9 +7,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.LaunchedEffect
+import com.example.mob3000gruppe4camping.Screen
+import com.google.firebase.auth.FirebaseAuth
+import androidx.navigation.NavHostController
 
 @Composable
-fun MineBookingerScreen() {
+fun MineBookingerScreen(navController: NavHostController) {
+
+    LaunchedEffect(key1 = FirebaseAuth.getInstance().currentUser) {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            navController.navigate(Screen.LoginSignup.route)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()

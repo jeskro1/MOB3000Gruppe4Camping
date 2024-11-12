@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class MainActivity : ComponentActivity() {
 
 
+
     private lateinit var db: FirebaseFirestore
     private val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "sampleUserId"
 
@@ -99,6 +100,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CampingApp(navController: NavHostController, onMapSelected: () -> Unit) {
+    val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
+        Screen.Home.route
+    } else {
+        Screen.LoginSignup.route
+    }
     Scaffold(
         bottomBar = {
             BottomNavigationBar(
@@ -110,13 +116,15 @@ fun CampingApp(navController: NavHostController, onMapSelected: () -> Unit) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.LoginSignup.route,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable(Screen.LoginSignup.route) { LoginSignupScreen(navController) }
             composable(Screen.Home.route) { HomeScreen(navController) }
+            composable(Screen.Receipt.route) { ReceiptScreen(navController) }
             composable(Screen.Profile.route) { ProfilesScreen(navController) }
             composable(Screen.Booking.route) { BookingScreen(navController) }
-            composable(Screen.MineBookinger.route) { ReceiptScreen() }
+            composable(Screen.MineBookinger.route) { MineBookingerScreen(navController) }
             composable(Screen.Map.route) {
 
                 onMapSelected()

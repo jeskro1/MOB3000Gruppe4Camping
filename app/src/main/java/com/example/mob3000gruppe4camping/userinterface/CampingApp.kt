@@ -12,12 +12,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mob3000gruppe4camping.Screen
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun CampingApp() {
     val navController = rememberNavController()
     val items = listOf(Screen.Home, Screen.Map, Screen.Profile)
     val context = LocalContext.current
+
+    val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
+        Screen.Home.route
+    } else {
+        Screen.LoginSignup.route
+    }
+
+
 
     Scaffold(
         topBar = {
@@ -50,16 +59,18 @@ fun CampingApp() {
             )
         }
     ) { innerPadding ->
+
+
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
+            startDestination = Screen.LoginSignup.route,
+            modifier = Modifier.padding(innerPadding),
         ) {
             composable(Screen.Home.route) { HomeScreen(navController) }
             composable(Screen.Profile.route) { ProfilesScreen(navController) }
             composable(Screen.Booking.route) { BookingScreen(navController) }
-            composable(Screen.Receipt.route) { ReceiptScreen() }
-            composable(Screen.MineBookinger.route) { MineBookingerScreen() }
+            composable(Screen.Receipt.route) { ReceiptScreen(navController) }
+            composable(Screen.MineBookinger.route) { MineBookingerScreen(navController) }
         }
     }
 }

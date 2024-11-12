@@ -14,17 +14,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.R
 import com.example.mob3000gruppe4camping.Screen
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Exclude
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.security.Timestamp
+import java.time.Instant
 
 
 data class Booking(
-    val campingSpot: String,
-    val campingType: String,
-    val campingDuration: String
-)
+    val campingSpot: String? = null,
+    val campingType: String? = null,
+    val campingDuration: String? = null,
+    val userId: String? = null,
+    val timestamp: String? = null,
+) {
+    constructor() : this(null, null, null, null, null)
+}
 
 @Composable
 fun BookingScreen(navController: NavHostController) {
+
+        LaunchedEffect(key1 = FirebaseAuth.getInstance().currentUser) {
+            if (FirebaseAuth.getInstance().currentUser == null) {
+                navController.navigate(Screen.LoginSignup.route)
+            }
+        }
 
     var selectedCampingSpot by remember { mutableStateOf("Velg camping plass") }
     var selectedCampingType by remember { mutableStateOf("Velg camping type") }
@@ -109,14 +124,17 @@ fun ConfirmButton(
     val db = FirebaseFirestore.getInstance()
     Button(
         onClick = {
-            // Create a Booking object
+            val timestamplong: Long = System.currentTimeMillis()/1000
+            val timestamp = timestamplong.toString()
+
             val booking = Booking(
                 campingSpot = campingSpot,
                 campingType = campingType,
-                campingDuration = campingDuration
+                campingDuration = campingDuration,
+                userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
+                timestamp = timestamp
             )
 
-            // Add the booking to Firestore
             db.collection("bookings")
                 .add(booking)
                 .addOnSuccessListener {

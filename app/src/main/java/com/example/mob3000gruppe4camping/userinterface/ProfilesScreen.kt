@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
@@ -68,7 +69,8 @@ fun ProfilesScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {  },
+            onClick = { FirebaseAuth.getInstance().signOut()
+                navController.navigate(Screen.LoginSignup.route) },
             modifier = Modifier
                 .size(200.dp, 60.dp)
         ) {
