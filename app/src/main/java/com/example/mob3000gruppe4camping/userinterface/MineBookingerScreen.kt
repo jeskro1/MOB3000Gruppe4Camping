@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.style.TextAlign
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
 import androidx.navigation.NavHostController
@@ -63,58 +64,70 @@ fun MineBookingerScreen(navController: NavHostController) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Show loading spinner if data is being fetched
+
         if (isLoading) {
             CircularProgressIndicator()
         }
-        // Show error message if there's an issue fetching data
+
         else if (error != null) {
             Text("Error: ${error?.message}")
         }
-        // Show bookings if data is loaded
+
         else {
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+
+
             ) {
                 items(bookings) { booking ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(8.dp),
-                        elevation = CardDefaults.cardElevation(8.dp)
+                        elevation = CardDefaults.cardElevation(8.dp),
+
                     ) {
                         Column(
                             modifier = Modifier.padding(16.dp),
                             horizontalAlignment = Alignment.Start
+
                         ) {
-                            // Display each piece of booking information
+                            Text(
+                                text = "BookingID: ${booking.bookingID ?: "N/A"}",
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
                             Text(
                                 text = "Sted: ${booking.campingSpot ?: "N/A"}",
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
                             Text(
                                 text = "Type: ${booking.campingType ?: "N/A"}",
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
                             )
                             Text(
                                 text = "Personer: ${booking.antPersoner ?: "N/A"}",
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
                             )
-
-                            // Display dates if available
                             Text(
                                 text = "Start Dato: ${booking.startDate ?: "N/A"}",
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
                             )
                             Text(
                                 text = "Slutt Dato: ${booking.endDate ?: "N/A"}",
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
                             )
-
-                            // Example price (you can calculate or replace it with actual data)
                             Text(
                                 text = "Pris: 299,99kr",
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center
                             )
                         }
                     }
