@@ -84,10 +84,6 @@ fun ReceiptScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    text = "Tid: ${bookingData?.campingDuration ?: ""}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
                     text = "Personer: ${bookingData?.antPersoner ?: ""}",
                     style = MaterialTheme.typography.bodyLarge
                 )
