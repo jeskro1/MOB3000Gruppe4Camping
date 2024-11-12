@@ -5,6 +5,8 @@ import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,6 +22,8 @@ fun LoginSignupScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isLogin by remember { mutableStateOf(true) }
+
+    var errorMessage by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -50,14 +54,12 @@ fun LoginSignupScreen(navController: NavHostController) {
         Button(
             onClick = {
                 if (isLogin) {
-
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-
                                 navController.navigate(Screen.Home.route)
                             } else {
-
+                                errorMessage = "Incorrect email or password"
                             }
                         }
                 } else {
@@ -65,10 +67,9 @@ fun LoginSignupScreen(navController: NavHostController) {
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-
                                 navController.navigate(Screen.Home.route)
                             } else {
-
+                                errorMessage = "Signup failed. Please check your credentials."
                             }
                         }
                 }
