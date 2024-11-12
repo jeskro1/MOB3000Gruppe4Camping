@@ -41,6 +41,16 @@ fun LoginSignupScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -91,16 +101,6 @@ fun LoginSignupScreen(navController: NavHostController) {
 
         TextButton(onClick = { isLogin = !isLogin }) {
             Text(if (isLogin) "Don't have an account? Signup" else "Already have an account? Login")
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        if (errorMessage.isNotEmpty()) {
-            Text(
-                text = errorMessage,
-                color = Color.Red,
-                modifier = Modifier.padding(top = 8.dp)
-            )
         }
     }
 }
