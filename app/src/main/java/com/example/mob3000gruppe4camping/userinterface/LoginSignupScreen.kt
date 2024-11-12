@@ -1,7 +1,5 @@
 package com.example.mob3000gruppe4camping.userinterface
 
-
-import android.util.Patterns
 import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -86,7 +84,10 @@ fun LoginSignupScreen(navController: NavHostController) {
 
         Button(
             onClick = {
-                val namePattern = Regex("^[A-Za-zÆØÅæøå ]+\$")
+
+                val namePattern = Regex("^[\\p{L}\\s]+\$")
+                val emailPattern = Regex("^[\\p{L}0-9._%+-]+@[\\p{L}0-9.-]+\\.[a-zA-Z]{2,}\$")
+                val passwordPattern = Regex("^(?=.*[A-Za-zÆØÅæøå])(?=.*\\d)(?=.*[!@#\$%^&*])[\\p{L}\\d!@#\$%^&*]{6,}\$")
 
                 if (!isLogin && name.isBlank()) {
                     errorMessage = "Vennligst fyll ut navnet ditt."
@@ -94,11 +95,11 @@ fun LoginSignupScreen(navController: NavHostController) {
                     errorMessage = "Navnet kan bare inneholde bokstaver og mellomrom."
                 } else if (email.isBlank()) {
                     errorMessage = "Vennligst fyll ut e-postadressen."
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                } else if (!email.matches(emailPattern)) {
                     errorMessage = "Vennligst skriv en gyldig e-postadresse."
                 } else if (password.isBlank()) {
                     errorMessage = "Vennligst fyll ut passordet."
-                } else if (password.length < 6 || !password.matches(Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#\$%^&*])[A-Za-z\\d!@#\$%^&*]+$"))) {
+                } else if (!password.matches(passwordPattern)) {
                     errorMessage = "Passordet må ha minst 6 tegn og inneholde bokstaver, tall og spesialtegn."
                 } else {
                     if (isLogin) {
@@ -126,7 +127,6 @@ fun LoginSignupScreen(navController: NavHostController) {
         ) {
             Text(if (isLogin) "Logg inn" else "Lag bruker")
         }
-
 
         Spacer(modifier = Modifier.height(16.dp))
 
