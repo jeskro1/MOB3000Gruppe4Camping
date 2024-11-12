@@ -200,41 +200,62 @@ fun ConfirmButton(
     endDate: Long?
 ) {
     val db = FirebaseFirestore.getInstance()
+    var errorMessage by remember { mutableStateOf("") }
+
     Button(
         onClick = {
-            val timestamplong: Long = System.currentTimeMillis()/1000
-            val timestamp = timestamplong.toString()
-            val bookingID = UUID.randomUUID().toString()
 
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-            val startDateString = startDate?.let { dateFormat.format(Date(it)) }
-            val endDateString = endDate?.let { dateFormat.format(Date(it)) }
+            if (campingSpot == "Velg camping plass" ||
+                campingType == "Velg camping type" ||
+                antPersoner == "Velg antall personer" ||
+                startDate == null ||
+                endDate == null
+            ) {
+                errorMessage = "Vennligst fyll ut alle feltene før du bekrefter."
+            } else {
+                val timestampLong: Long = System.currentTimeMillis() / 1000
+                val timestamp = timestampLong.toString()
+                val bookingID = UUID.randomUUID().toString()
 
-            val booking = Booking(
-                bookingID = bookingID,
-                campingSpot = campingSpot,
-                campingType = campingType,
-                userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
-                timestamp = timestamp,
-                antPersoner = antPersoner,
-                startDate = startDateString,
-                endDate = endDateString
-            )
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val startDateString = dateFormat.format(Date(startDate))
+                val endDateString = dateFormat.format(Date(endDate))
 
-            db.collection("bookings")
-                .add(booking)
-                .addOnSuccessListener {
-                    navController.navigate(Screen.Receipt.route)
-                }
-                .addOnFailureListener { e ->
-                    println("Error adding document: $e")
-                }
+                val booking = Booking(
+                    bookingID = bookingID,
+                    campingSpot = campingSpot,
+                    campingType = campingType,
+                    userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
+                    timestamp = timestamp,
+                    antPersoner = antPersoner,
+                    startDate = startDateString,
+                    endDate = endDateString
+                )
+
+                db.collection("bookings")
+                    .add(booking)
+                    .addOnSuccessListener {
+                        navController.navigate(Screen.Receipt.route)
+                    }
+                    .addOnFailureListener { e ->
+                        println("Error adding document: $e")
+                    }
+                errorMessage = ""
+            }
         },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
         Text("Bekreft")
+    }
+
+    if (errorMessage.isNotEmpty()) {
+        Text(
+            text = errorMessage,
+            color = MaterialTheme.colorScheme.error,
+            modifier = Modifier.padding(top = 8.dp)
+        )
     }
 }
 
