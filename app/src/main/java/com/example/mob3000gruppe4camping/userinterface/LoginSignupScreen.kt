@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -81,6 +82,14 @@ fun LoginSignupScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
         TextButton(onClick = { isLogin = !isLogin }) {
             Text(if (isLogin) "Don't have an account? Signup" else "Already have an account? Login")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red, // Or any desired error color
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
     }
 }
