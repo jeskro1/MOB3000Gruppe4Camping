@@ -48,7 +48,7 @@ fun BottomNavigationBar(
 fun TopNavigationBar(navController: NavHostController, currentRoute: String) {
     TopAppBar(
         title = { Text("") },
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Blue),
+
         navigationIcon = {
             if (currentRoute != Screen.Home.route) {
                 IconButton(onClick = {
