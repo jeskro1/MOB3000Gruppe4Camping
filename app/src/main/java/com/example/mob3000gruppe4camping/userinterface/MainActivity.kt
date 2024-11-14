@@ -101,7 +101,7 @@ fun CampingApp(navController: NavHostController, onMapSelected: () -> Unit) {
     }
     Scaffold(
         topBar = {
-            TopNavigationBar(navController, startDestination)
+            TopNavigationBar(navController)
         },
         bottomBar = {
             BottomNavigationBar(

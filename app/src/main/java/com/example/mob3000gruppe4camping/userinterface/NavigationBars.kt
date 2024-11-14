@@ -22,47 +22,59 @@ fun BottomNavigationBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    NavigationBar {
-        items.forEach { screen ->
-            NavigationBarItem(
-                icon = { Icon(screen.icon, contentDescription = screen.title) },
-                label = { Text(screen.title) },
-                selected = currentRoute == screen.route,
-                onClick = {
-                    if (screen == Screen.Map) {
-                        onMapSelected()
-                    } else if (currentRoute != screen.route) {
-                        navController.navigate(screen.route) {
-                            launchSingleTop = true
-                            restoreState = true
+    if (currentRoute != Screen.LoginSignup.route) {
+        NavigationBar {
+            items.forEach { screen ->
+                NavigationBarItem(
+                    icon = { Icon(screen.icon, contentDescription = screen.title) },
+                    label = { Text(screen.title) },
+                    selected = currentRoute == screen.route,
+                    onClick = {
+                        if (screen == Screen.Map) {
+                            onMapSelected()
+                        } else if (currentRoute != screen.route) {
+                            navController.navigate(screen.route) {
+                                launchSingleTop = true
+                                restoreState = true
+                                popUpTo(screen.route) { inclusive = true }
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopNavigationBar(navController: NavHostController, currentRoute: String) {
+fun TopNavigationBar(navController: NavHostController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val noArrow = listOf(Screen.Home.route, Screen.LoginSignup.route)
+
     TopAppBar(
         title = { Text("") },
 
         navigationIcon = {
-            if (currentRoute != Screen.Home.route) {
+            if (currentRoute != null && currentRoute !in noArrow) {
                 IconButton(onClick = {
-                    navController.popBackStack()
-                    navController.clearBackStack(Screen.Home.route)
+                    navController.popBackStack(
+                        route = currentRoute,
+                        inclusive = true
+                    )
                 }) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
                         tint = Color.Black,
                         modifier = Modifier.size(24.dp)
-                        )
+                    )
                 }
             }
         }
     )
 }
+
