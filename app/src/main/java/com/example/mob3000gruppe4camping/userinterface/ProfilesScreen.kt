@@ -13,7 +13,6 @@ import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
 
-
 @Composable
 fun ProfilesScreen(navController: NavHostController) {
     val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -54,6 +53,16 @@ fun ProfilesScreen(navController: NavHostController) {
             Text("Logg ut")
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { FirebaseAuth.getInstance().currentUser?.delete() // Warning?
+                navController.navigate(Screen.LoginSignup.route) },
+            modifier = Modifier
+                .size(200.dp, 60.dp)
+        ) {
+            Text("Slett bruker")
+        }
     }
 }
 

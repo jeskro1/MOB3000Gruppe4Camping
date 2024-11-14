@@ -3,12 +3,14 @@ package com.example.mob3000gruppe4camping.userinterface
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.style.TextAlign
@@ -32,6 +34,7 @@ data class Booking(
     val antPersoner: String? = null,
     val startDate: String? = null,
     val endDate: String? = null,
+    val pris: Int? = null
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,10 +63,13 @@ fun BookingScreen(navController: NavHostController) {
     val datePickerStateStart = rememberDatePickerState()
     val datePickerStateEnd = rememberDatePickerState()
 
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -199,64 +205,114 @@ fun ConfirmButton(
     startDate: Long?,
     endDate: Long?
 ) {
+    val price = if (
+        campingSpot != "Velg camping plass" &&
+        campingType != "Velg camping type" &&
+        antPersoner != "Velg antall personer" &&
+        startDate != null &&
+        endDate != null
+    ) {
+        calculatePrice(
+            campingSpot,
+            campingType,
+            antPersoner.toIntOrNull() ?: 1,
+            startDate,
+            endDate
+        )
+    } else {
+        0.0
+    }
+
     val db = FirebaseFirestore.getInstance()
     var errorMessage by remember { mutableStateOf("") }
 
-    Button(
-        onClick = {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        if (price > 0) {
+            Text(
+                text = "Totalpris: ${price.toInt()} kr",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+            )
+        }
 
-            if (campingSpot == "Velg camping plass" ||
-                campingType == "Velg camping type" ||
-                antPersoner == "Velg antall personer" ||
-                startDate == null ||
-                endDate == null
-            ) {
-                errorMessage = "Vennligst fyll ut alle feltene før du bekrefter."
-            } else {
-                val timestampLong: Long = System.currentTimeMillis() / 1000
-                val timestamp = timestampLong.toString()
-                val bookingID = UUID.randomUUID().toString()
+        Button(
+            onClick = {
+                if (campingSpot == "Velg camping plass") {
+                    errorMessage = "Vennligst velg en campingplass."
+                } else if (campingType == "Velg camping type") {
+                    errorMessage = "Vennligst velg en campingtype."
+                } else if (antPersoner == "Velg antall personer") {
+                    errorMessage = "Vennligst velg antall personer."
+                } else if (startDate == null) {
+                    errorMessage = "Vennligst velg en startdato."
+                } else if (endDate == null) {
+                    errorMessage = "Vennligst velg en sluttdato."
+                } else if (endDate <= startDate) {
+                    errorMessage = "Sluttdato må være etter startdato."
+                } else {
+                    val timestampLong: Long = System.currentTimeMillis() / 1000
+                    val timestamp = timestampLong.toString()
+                    val bookingID = UUID.randomUUID().toString()
 
-                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-                val startDateString = dateFormat.format(Date(startDate))
-                val endDateString = dateFormat.format(Date(endDate))
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val startDateString = dateFormat.format(Date(startDate))
+                    val endDateString = dateFormat.format(Date(endDate))
 
-                val booking = Booking(
-                    bookingID = bookingID,
-                    campingSpot = campingSpot,
-                    campingType = campingType,
-                    userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
-                    timestamp = timestamp,
-                    antPersoner = antPersoner,
-                    startDate = startDateString,
-                    endDate = endDateString
-                )
+                    val booking = Booking(
+                        bookingID = bookingID,
+                        campingSpot = campingSpot,
+                        campingType = campingType,
+                        userId = FirebaseAuth.getInstance().currentUser?.uid ?: "",
+                        timestamp = timestamp,
+                        antPersoner = antPersoner,
+                        startDate = startDateString,
+                        endDate = endDateString,
+                        pris = price.toInt()
+                    )
 
-                db.collection("bookings")
-                    .add(booking)
-                    .addOnSuccessListener {
-                        navController.navigate(Screen.Receipt.route)
-                    }
-                    .addOnFailureListener { e ->
-                        println("Error adding document: $e")
-                    }
-                errorMessage = ""
-            }
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-    ) {
-        Text("Bekreft")
+                    db.collection("bookings")
+                        .add(booking)
+                        .addOnSuccessListener {
+                            navController.navigate(Screen.Receipt.route)
+                        }
+                        .addOnFailureListener { e ->
+                            errorMessage = "Noe gikk galt: ${e.localizedMessage}"
+                        }
+                    errorMessage = ""
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        ) {
+            Text("Bekreft")
+        }
+
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
     }
+}
 
-    if (errorMessage.isNotEmpty()) {
-        Text(
-            text = errorMessage,
-            color = MaterialTheme.colorScheme.error,
-            modifier = Modifier.padding(top = 8.dp)
-        )
+fun calculatePrice(campingSpot: String, campingType: String, antPersoner: Int, startDate: Long, endDate: Long): Double {
+    val basePrice = when (campingType) {
+        "Telt" -> 100.0
+        "Camping-Vogn" -> 200.0
+        "Camping-Buss" -> 300.0
+        else -> 50.0
     }
+    val locationMultiplier = when (campingSpot) {
+        "A1", "A2" -> 1.1
+        "B1", "B2" -> 1.2
+        else -> 1.0
+    }
+    val antDager = (endDate - startDate) / (1000 * 60 * 60 * 24)
+
+    return basePrice * locationMultiplier * antDager * antPersoner
 }
 
 @Composable

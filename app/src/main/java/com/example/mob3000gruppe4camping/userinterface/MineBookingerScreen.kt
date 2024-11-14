@@ -128,7 +128,7 @@ fun MineBookingerScreen(navController: NavHostController) {
                                 textAlign = TextAlign.Center
                             )
                             Text(
-                                text = "Pris: 299,99kr",
+                                text = "Pris: ${booking.pris ?: 0} kr",
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.fillMaxWidth(),
                                 textAlign = TextAlign.Center
