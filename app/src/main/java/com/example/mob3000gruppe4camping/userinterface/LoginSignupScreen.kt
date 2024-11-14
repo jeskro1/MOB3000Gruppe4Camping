@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 
 
@@ -84,7 +85,6 @@ fun LoginSignupScreen(navController: NavHostController) {
 
         Button(
             onClick = {
-
                 val namePattern = Regex("^[\\p{L}\\s]+\$")
                 val emailPattern = Regex("^[\\p{L}0-9._%+-]+@[\\p{L}0-9.-]+\\.[a-zA-Z]{2,}\$")
                 val passwordPattern = Regex("^(?=.*[A-Za-zÆØÅæøå])(?=.*\\d)(?=.*[!@#\$%^&*])[\\p{L}\\d!@#\$%^&*]{6,}\$")
@@ -115,7 +115,24 @@ fun LoginSignupScreen(navController: NavHostController) {
                         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    navController.navigate(Screen.Home.route)
+                                    val userId = FirebaseAuth.getInstance().currentUser?.uid
+                                    val db = FirebaseFirestore.getInstance()
+
+                                    val user = hashMapOf(
+                                        "name" to name,
+                                        "email" to email
+                                    )
+
+                                    userId?.let {
+                                        db.collection("users").document(it)
+                                            .set(user)
+                                            .addOnSuccessListener {
+                                                navController.navigate(Screen.Home.route)
+                                            }
+                                            .addOnFailureListener { e ->
+                                                errorMessage = "Feil ved lagring av brukerinformasjon."
+                                            }
+                                    }
                                 } else {
                                     errorMessage = "Registrering mislyktes. Passordet må ha minst 6 tegn og inneholde bokstaver, tall og spesialtegn."
                                 }
