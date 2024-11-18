@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.delay
-
 
 @Composable
 fun LoginSignupScreen(navController: NavHostController) {
@@ -115,7 +115,20 @@ fun LoginSignupScreen(navController: NavHostController) {
                         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    navController.navigate(Screen.Home.route)
+                                    val user = FirebaseAuth.getInstance().currentUser
+                                    if (user != null) {
+                                        val profileUpdate = userProfileChangeRequest {
+                                            displayName = name
+                                        }
+                                        user.updateProfile(profileUpdate)
+                                            .addOnCompleteListener { profileTask ->
+                                                if (profileTask.isSuccessful) {
+                                                    navController.navigate(Screen.Home.route)
+                                                } else {
+                                                    errorMessage = "Registrering mislyktes. Vennligst prøv igjen."
+                                                }
+                                                }
+                                    }
                                 } else {
                                     errorMessage = "Registrering mislyktes. Passordet må ha minst 6 tegn og inneholde bokstaver, tall og spesialtegn."
                                 }

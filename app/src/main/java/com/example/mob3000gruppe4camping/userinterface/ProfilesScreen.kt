@@ -15,8 +15,11 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ProfilesScreen(navController: NavHostController) {
+
     val firebaseUser = FirebaseAuth.getInstance().currentUser
     val userEmail = firebaseUser?.email ?: ""
+    val name = firebaseUser?.displayName ?: ""
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,7 +28,7 @@ fun ProfilesScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Jonas Deig",
+            text = "Navn: $name",
             style = MaterialTheme.typography.titleLarge,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
