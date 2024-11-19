@@ -119,13 +119,13 @@ fun LoginSignupScreen(navController: NavHostController) {
                                     val db = FirebaseFirestore.getInstance()
 
                                     val user = hashMapOf(
-                                        "name" to name,
-                                        "email" to email
+                                        "userName" to name,
+                                        "userEmail" to email
                                     )
 
                                     userId?.let {
-                                        db.collection("users").document(it)
-                                            .set(user)
+                                        db.collection("users")
+                                            .add(user)
                                             .addOnSuccessListener {
                                                 navController.navigate(Screen.Home.route)
                                             }
