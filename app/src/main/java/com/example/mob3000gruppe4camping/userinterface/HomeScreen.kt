@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.R
 import com.example.mob3000gruppe4camping.Screen
 
+// Hovedskjerm for appen
 @Composable
 fun HomeScreen(navController: NavHostController) {
     Scaffold(
@@ -34,6 +35,7 @@ fun HomeScreen(navController: NavHostController) {
     }
 }
 
+// Funksjoner for bilde, tekst og knapp på hovedskjermen
 @Composable
 fun CampingImage() {
     Image(

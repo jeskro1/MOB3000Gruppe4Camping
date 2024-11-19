@@ -13,13 +13,16 @@ import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
 
+// Profil skjerm
 @Composable
 fun ProfilesScreen(navController: NavHostController) {
 
+    // Henter brukernavn og epost
     val firebaseUser = FirebaseAuth.getInstance().currentUser
     val userEmail = firebaseUser?.email ?: ""
     val name = firebaseUser?.displayName ?: ""
 
+    // Viser navn og email
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,13 +31,13 @@ fun ProfilesScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Navn: $name",
+            text = name,
             style = MaterialTheme.typography.titleLarge,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Email: $userEmail",
+            text = userEmail,
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray,
             fontSize = 20.sp,
@@ -43,7 +46,6 @@ fun ProfilesScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         MineBookingerButton(navController)
-
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -58,8 +60,9 @@ fun ProfilesScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Sletter bruker
         Button(
-            onClick = { FirebaseAuth.getInstance().currentUser?.delete() // Warning?
+            onClick = { FirebaseAuth.getInstance().currentUser?.delete()
                 navController.navigate(Screen.LoginSignup.route) },
             modifier = Modifier
                 .size(200.dp, 60.dp)
@@ -69,6 +72,7 @@ fun ProfilesScreen(navController: NavHostController) {
     }
 }
 
+// Knapp til MineBookinger
 @Composable
 fun MineBookingerButton(navController: NavHostController) {
     Button(

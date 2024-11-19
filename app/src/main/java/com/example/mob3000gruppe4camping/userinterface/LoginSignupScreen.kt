@@ -17,6 +17,7 @@ import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.userProfileChangeRequest
 
+// Login og signup skjerm
 @Composable
 fun LoginSignupScreen(navController: NavHostController) {
     var name by remember { mutableStateOf("") }
@@ -32,6 +33,7 @@ fun LoginSignupScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // Viser error dersom noe gikk galt
         if (errorMessage.isNotEmpty()) {
             Text(
                 text = errorMessage,
@@ -41,6 +43,7 @@ fun LoginSignupScreen(navController: NavHostController) {
         }
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Tekst boks for signup
         if (!isLogin) {
             OutlinedTextField(
                 value = name,
@@ -49,9 +52,11 @@ fun LoginSignupScreen(navController: NavHostController) {
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
+
             Spacer(modifier = Modifier.height(16.dp))
         }
 
+        // Tekst bokser for både login og signup
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -60,6 +65,7 @@ fun LoginSignupScreen(navController: NavHostController) {
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
@@ -71,15 +77,17 @@ fun LoginSignupScreen(navController: NavHostController) {
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
-
+                // Regex for validering av input
                 val namePattern = Regex("^[\\p{L}\\s]+\$")
                 val emailPattern = Regex("^[\\p{L}0-9._%+-]+@[\\p{L}0-9.-]+\\.[a-zA-Z]{2,}\$")
                 val passwordPattern = Regex("^(?=.*[A-Za-zÆØÅæøå])(?=.*\\d)(?=.*[!@#\$%^&*])[\\p{L}\\d!@#\$%^&*]{6,}\$")
 
+                // Error handling
                 if (!isLogin && name.isBlank()) {
                     errorMessage = "Vennligst fyll ut navnet ditt."
                 } else if (!isLogin && !name.matches(namePattern)) {
@@ -93,6 +101,7 @@ fun LoginSignupScreen(navController: NavHostController) {
                 } else if (!password.matches(passwordPattern)) {
                     errorMessage = "Passordet må ha minst 6 tegn og inneholde bokstaver, tall og spesialtegn."
                 } else {
+                    // Logikk for login
                     if (isLogin) {
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
@@ -103,6 +112,7 @@ fun LoginSignupScreen(navController: NavHostController) {
                                 }
                             }
                     } else {
+                        // Logikk for signup
                         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
@@ -111,7 +121,7 @@ fun LoginSignupScreen(navController: NavHostController) {
                                         val profileUpdate = userProfileChangeRequest {
                                             displayName = name
                                         }
-                                        user.updateProfile(profileUpdate)
+                                        user.updateProfile(profileUpdate) // Legger til displayName til bruker
                                             .addOnCompleteListener { profileTask ->
                                                 if (profileTask.isSuccessful) {
                                                     navController.navigate(Screen.Home.route)
@@ -134,6 +144,7 @@ fun LoginSignupScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Bytter mellom login og signup
         TextButton(onClick = { isLogin = !isLogin }) {
             Text(if (isLogin) "Har du ikke bruker? Lag en her!" else "Har du allerede en bruker? Logg inn her!")
         }

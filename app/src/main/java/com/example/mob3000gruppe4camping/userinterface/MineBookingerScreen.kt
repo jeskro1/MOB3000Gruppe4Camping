@@ -22,6 +22,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 
+// MineBookinger skjerm
 @Composable
 fun MineBookingerScreen(navController: NavHostController) {
 
@@ -29,6 +30,7 @@ fun MineBookingerScreen(navController: NavHostController) {
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<Exception?>(null) }
 
+    // Henter alle bookingene til brukerens userId
     LaunchedEffect(key1 = FirebaseAuth.getInstance().currentUser)
     {
         if (FirebaseAuth.getInstance().currentUser == null) {
@@ -64,6 +66,7 @@ fun MineBookingerScreen(navController: NavHostController) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        // Viser loading sirkel dersom det ventes på data
         if (isLoading) {
             CircularProgressIndicator()
         }
@@ -73,11 +76,10 @@ fun MineBookingerScreen(navController: NavHostController) {
         }
 
         else {
+            // Viser alle bookingene
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-
-
             ) {
                 items(bookings) { booking ->
                     Card(
@@ -92,6 +94,7 @@ fun MineBookingerScreen(navController: NavHostController) {
 
                         ) {
                             Text(
+                                // Dersom tekst er null, vises "N/A"
                                 text = "BookingID: ${booking.bookingID ?: "N/A"}",
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.fillMaxWidth(),

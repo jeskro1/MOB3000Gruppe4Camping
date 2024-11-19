@@ -23,6 +23,7 @@ import androidx.compose.material3.rememberDatePickerState
 import java.text.SimpleDateFormat
 import java.util.*
 
+// Data klasse for booking objekt
 data class Booking(
     val bookingID: String? = null,
     val campingSpot: String? = null,
@@ -35,11 +36,12 @@ data class Booking(
     val pris: Int? = null
 )
 
-@SuppressLint("SimpleDateFormat")
+@SuppressLint("SimpleDateFormat") // Suppress warning for SimpleDateFormat
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingScreen(navController: NavHostController) {
 
+        // Sjekker om bruker er logget inn
         LaunchedEffect(key1 = FirebaseAuth.getInstance().currentUser) {
             if (FirebaseAuth.getInstance().currentUser == null) {
                 navController.navigate(Screen.LoginSignup.route)
@@ -48,7 +50,6 @@ fun BookingScreen(navController: NavHostController) {
 
     var startDateButtonText by remember { mutableStateOf("Select Start Date") }
     var endDateButtonText by remember { mutableStateOf("Select End Date") }
-
     var selectedCampingSpot by remember { mutableStateOf("Velg camping plass") }
     var selectedCampingType by remember { mutableStateOf("Velg camping type") }
     var selectedAntPersoner by remember { mutableStateOf("Velg antall personer") }
@@ -71,6 +72,7 @@ fun BookingScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // DatePicker for startdato
         if (showStartDatePicker) {
             DatePickerDialog(
                 onDismissRequest = { showStartDatePicker = false },
@@ -93,6 +95,7 @@ fun BookingScreen(navController: NavHostController) {
             }
         }
 
+        // DatePicker for sluttdato
         if (showEndDatePicker) {
             DatePickerDialog(
                 onDismissRequest = { showEndDatePicker = false },
@@ -233,8 +236,10 @@ fun ConfirmButton(
             )
         }
 
+        // Bekreft button
         Button(
             onClick = {
+                // Error handling
                 if (campingSpot == "Velg camping plass") {
                     errorMessage = "Vennligst velg en campingplass."
                 } else if (campingType == "Velg camping type") {
@@ -296,6 +301,7 @@ fun ConfirmButton(
     }
 }
 
+// Kalkulerer "placeholder" pris
 fun calculatePrice(campingSpot: String, campingType: String, antPersoner: Int, startDate: Long, endDate: Long): Double {
     val basePrice = when (campingType) {
         "Telt" -> 100.0
@@ -313,6 +319,7 @@ fun calculatePrice(campingSpot: String, campingType: String, antPersoner: Int, s
     return basePrice * locationMultiplier * antDager * antPersoner
 }
 
+// Funksjon for dropdown valgene
 @Composable
 fun DropdownItem(
     selectedValue: String,

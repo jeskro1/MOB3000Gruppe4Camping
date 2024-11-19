@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mob3000gruppe4camping.Screen
 
+// Setter opp Bottom Navigation Bar
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
@@ -46,7 +47,7 @@ fun BottomNavigationBar(
     }
 }
 
-
+// Setter opp Top Navigation Bar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopNavigationBar(navController: NavHostController) {

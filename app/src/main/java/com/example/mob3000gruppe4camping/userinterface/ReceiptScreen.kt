@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 
+// Kvittering skjerm
 @Composable
 fun ReceiptScreen(navController: NavHostController) {
     var bookingData by remember { mutableStateOf<Booking?>(null) }
@@ -33,6 +34,7 @@ fun ReceiptScreen(navController: NavHostController) {
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             val db = Firebase.firestore
 
+            // Henter en booking etter siste timestamp til den brukeren
             db.collection("bookings")
                 .whereEqualTo("userId", userId)
                 .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -40,6 +42,7 @@ fun ReceiptScreen(navController: NavHostController) {
                 .get()
                 .addOnSuccessListener { querySnapshot ->
                     if (!querySnapshot.isEmpty) {
+                        // Legger inn data i bookingData
                         bookingData = querySnapshot.documents[0].toObject(Booking::class.java)
                     }
                     isLoading = false
@@ -51,6 +54,7 @@ fun ReceiptScreen(navController: NavHostController) {
         }
     }
 
+    // Viser bookingData / kvitteringen
     Column(
         modifier = Modifier
             .fillMaxSize()
