@@ -23,8 +23,6 @@ import androidx.compose.material3.rememberDatePickerState
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-
 data class Booking(
     val bookingID: String? = null,
     val campingSpot: String? = null,
@@ -37,6 +35,7 @@ data class Booking(
     val pris: Int? = null
 )
 
+@SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingScreen(navController: NavHostController) {
@@ -56,7 +55,6 @@ fun BookingScreen(navController: NavHostController) {
     var showStartDatePicker by remember { mutableStateOf(false) }
     var showEndDatePicker by remember { mutableStateOf(false) }
 
-    val bookingID = UUID.randomUUID().toString()
     val campingSpots = listOf("A1", "A2", "A3", "B1")
     val campingTypes = listOf("Telt", "Camping-Vogn", "Camping-Buss")
     val antPersoner = listOf("1", "2", "3", "4")

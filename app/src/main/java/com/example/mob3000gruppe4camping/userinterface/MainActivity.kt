@@ -94,14 +94,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CampingApp(navController: NavHostController, onMapSelected: () -> Unit) {
-    val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
-        Screen.Home.route
-    } else {
-        Screen.LoginSignup.route
-    }
     Scaffold(
         topBar = {
-            TopNavigationBar(navController, startDestination)
+            TopNavigationBar(navController)
         },
         bottomBar = {
             BottomNavigationBar(
