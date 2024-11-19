@@ -6,9 +6,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/camping_logo"
+        android:icon="@mipmap/camping_app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/camping_logo"
+        android:roundIcon="@mipmap/camping_app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
