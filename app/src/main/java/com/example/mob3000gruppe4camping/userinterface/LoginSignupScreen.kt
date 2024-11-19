@@ -16,7 +16,6 @@ import androidx.navigation.NavHostController
 import com.example.mob3000gruppe4camping.Screen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.userProfileChangeRequest
-import kotlinx.coroutines.delay
 
 @Composable
 fun LoginSignupScreen(navController: NavHostController) {
