@@ -36,7 +36,7 @@ data class Booking(
     val pris: Int? = null
 )
 
-@SuppressLint("SimpleDateFormat") // Suppress warning for SimpleDateFormat
+@SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingScreen(navController: NavHostController) {
@@ -48,8 +48,8 @@ fun BookingScreen(navController: NavHostController) {
             }
         }
 
-    var startDateButtonText by remember { mutableStateOf("Select Start Date") }
-    var endDateButtonText by remember { mutableStateOf("Select End Date") }
+    var startDateButtonText by remember { mutableStateOf("Velg startdato") }
+    var endDateButtonText by remember { mutableStateOf("Velg sluttdato") }
     var selectedCampingSpot by remember { mutableStateOf("Velg camping plass") }
     var selectedCampingType by remember { mutableStateOf("Velg camping type") }
     var selectedAntPersoner by remember { mutableStateOf("Velg antall personer") }
@@ -87,7 +87,7 @@ fun BookingScreen(navController: NavHostController) {
                 },
                 dismissButton = {
                     TextButton(onClick = { showStartDatePicker = false }) {
-                        Text("Cancel")
+                        Text("Kanseller")
                     }
                 }
             ) {
@@ -110,7 +110,7 @@ fun BookingScreen(navController: NavHostController) {
                 },
                 dismissButton = {
                     TextButton(onClick = { showEndDatePicker = false }) {
-                        Text("Cancel")
+                        Text("Kanseller")
                     }
                 }
             ) {
@@ -136,7 +136,7 @@ fun BookingScreen(navController: NavHostController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Booking Details",
+                    text = "Bookingdetaljer",
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )

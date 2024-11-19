@@ -35,7 +35,8 @@ class MainActivity : ComponentActivity() {
     private fun openGoogleMaps() {
         val latitude = -54.4221061
         val longitude = 3.3406971
-        val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude(Campingplass)")
+        val placeName = "Bouvet Øya Camping"
+        val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude($placeName)")
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
         startActivity(mapIntent)
