@@ -1,6 +1,5 @@
 package com.example.mob3000gruppe4camping.userinterface
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -36,7 +35,6 @@ data class Booking(
     val pris: Int? = null
 )
 
-@SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookingScreen(navController: NavHostController) {
@@ -79,7 +77,7 @@ fun BookingScreen(navController: NavHostController) {
                 confirmButton = {
                     TextButton(onClick = {
                         showStartDatePicker = false
-                        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("no", "NO"))
                         startDateButtonText = dateFormat.format(datePickerStateStart.selectedDateMillis)
                     }) {
                         Text("OK")
@@ -102,7 +100,7 @@ fun BookingScreen(navController: NavHostController) {
                 confirmButton = {
                     TextButton(onClick = {
                         showEndDatePicker = false
-                        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("no", "NO"))
                         endDateButtonText = dateFormat.format(datePickerStateEnd.selectedDateMillis)
                     }) {
                         Text("OK")
@@ -196,7 +194,6 @@ fun BookingScreen(navController: NavHostController) {
     }
 }
 
-@SuppressLint("SimpleDateFormat")
 @Composable
 fun ConfirmButton(
     navController: NavHostController,

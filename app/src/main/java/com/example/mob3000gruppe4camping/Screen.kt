@@ -9,13 +9,12 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.ui.graphics.vector.ImageVector
 
-
 sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
     object LoginSignup : Screen("loginsignup", "LoginSignUp", Icons.Default.LockPerson)
-    object Home : Screen("home", "Home", Icons.Default.Home)
-    object Map : Screen("map", "Maps", Icons.Default.Map)
-    object Profile : Screen("profile", "Profile", Icons.Default.Person)
+    object Home : Screen("home", "Hjem", Icons.Default.Home)
+    object Map : Screen("map", "Kart", Icons.Default.Map)
+    object Profile : Screen("profile", "Profil", Icons.Default.Person)
     object Booking : Screen("booking", "Booking", Icons.Default.Book)
-    object Receipt : Screen("receipt", "Receipt", Icons.Default.Receipt)
+    object Receipt : Screen("receipt", "Kvittering", Icons.Default.Receipt)
     object MineBookinger : Screen("minebookinger", "Mine Bookinger", Icons.Default.Receipt)
 }
