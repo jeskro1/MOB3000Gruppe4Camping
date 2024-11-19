@@ -24,15 +24,7 @@ fun LoginSignupScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isLogin by remember { mutableStateOf(true) }
-
     var errorMessage by remember { mutableStateOf("") }
-
-    LaunchedEffect(errorMessage) {
-        if (errorMessage.isNotEmpty()) {
-            delay(20000)
-            errorMessage = ""
-        }
-    }
 
     Column(
         modifier = Modifier
